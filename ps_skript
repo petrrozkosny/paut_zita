@@ -1,0 +1,25 @@
+# Nastavení, aby skript nevyžadoval manuální potvrzení (např. při otevření souboru)
+$excel = New-Object -ComObject Excel.Application
+$excel.DisplayAlerts = $false
+
+# Otevření souboru Excel (nahraďte cestu vaším souborem)
+# Nezapomenout do proměnné přidat uvozovky
+$workbook = $excel.Workbooks.Open(PROMENNA)
+
+# Aktualizace dotazů Power Query
+foreach ($query in $workbook.Queries)
+{
+    try
+    {
+        $workbook.Connections.Item($query.Name).Refresh()
+    }
+    catch
+    {
+        Write-Warning "Nelze aktualizovat dotaz: $($query.Name)"
+    }
+}
+
+# Uložení, zavření a ukončení Excel
+$workbook.Save()
+$workbook.Close($true)
+$excel.Quit()
