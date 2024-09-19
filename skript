@@ -1,0 +1,15 @@
+/# Do proměnné Files si uložte soubory ze složky paut_data
+Otevřete nový Excel a postupně do něj zapisujte názvy jednotlivých soubrů (sloupec 1) a datumu vytvoření souboru (sloupec2)
+Po dokončení iterace Excel uložte do složky paut_data#/
+Folder.GetFiles Folder: $'''C:\\Users\\petrrozkosny\\Downloads\\paut_data\\paut_data''' FileFilter: $'''*''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+Excel.LaunchExcel.LaunchUnderExistingProcess Visible: True Instance=> ExcelInstance
+LOOP FOREACH CurrentItem IN Files
+    Excel.GetFirstFreeRowOnColumn Instance: ExcelInstance Column: 1 FirstFreeRowOnColumn=> FirstFreeRowOnColumn
+    Excel.WriteToExcel.WriteCell Instance: ExcelInstance Value: CurrentItem.FullName Column: 1 Row: FirstFreeRowOnColumn
+    Excel.WriteToExcel.WriteCell Instance: ExcelInstance Value: CurrentItem.CreationTime Column: 2 Row: FirstFreeRowOnColumn
+END
+Excel.CloseExcel.CloseAndSaveAs Instance: ExcelInstance DocumentFormat: Excel.ExcelFormat.FromExtension DocumentPath: $'''C:\\Users\\petrrozkosny\\Downloads\\paut_data\\paut_data\\seznam_souboru.xlsx'''
+Excel.LaunchExcel.LaunchAndOpenUnderExistingProcess Path: $'''C:\\Users\\petrrozkosny\\Downloads\\paut_data\\paut_data\\seznam_souboru.xlsx''' Visible: True ReadOnly: False Instance=> ExcelInstance
+Excel.ReadFromExcel.ReadAllCells Instance: ExcelInstance ReadAsText: False FirstLineIsHeader: False RangeValue=> ExcelData
+Variables.RetrieveDataTableColumnIntoList DataTable: ExcelData ColumnNameOrIndex: 0 ColumnAsList=> ColumnAsList
+Variables.SubtractLists FirstList: Files SecondList: ColumnAsList OutputList=> ListDifference
