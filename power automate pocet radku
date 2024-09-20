@@ -1,0 +1,1 @@
+length(body('Run_a_query_against_a_dataset')?['results']?[0]?['tables']?[0]?['rows'])
