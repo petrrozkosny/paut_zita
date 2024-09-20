@@ -1,0 +1,24 @@
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> CurrentDateTime
+@@flowname: 'spocitej_soubory'
+External.RunFlow FlowId: '5f6070b9-b1d5-4d8e-b15d-f3bf45e5da27' @cestaSlozky: $'''C:\\Users\\petrrozkosny\\Downloads\\paut_data\\paut_data''' @pocetSouboru=> pocetSouboruSlozka
+**REGION Excel
+IF (File.IfFile.Exists File: $'''C:\\Users\\petrrozkosny\\OneDrive - CC Marketing Group\\Plocha\\log.xlsx''') THEN
+    Excel.LaunchExcel.LaunchAndOpenUnderExistingProcess Path: $'''C:\\Users\\petrrozkosny\\Desktop\\log.xlsx''' Visible: True ReadOnly: False Instance=> ExcelInstance
+ELSE
+    Excel.LaunchExcel.LaunchUnderExistingProcess Visible: True Instance=> ExcelInstance
+END
+Excel.GetFirstFreeRowOnColumn Instance: ExcelInstance Column: 1 FirstFreeRowOnColumn=> FirstFreeRowOnColumn
+Excel.WriteToExcel.WriteCell Instance: ExcelInstance Value: CurrentDateTime Column: 1 Row: FirstFreeRowOnColumn
+Excel.WriteToExcel.WriteCell Instance: ExcelInstance Value: pocetSouboruSlozka Column: 2 Row: FirstFreeRowOnColumn
+IF (File.IfFile.Exists File: $'''C:\\Users\\petrrozkosny\\OneDrive - CC Marketing Group\\Plocha\\log.xlsx''') THEN
+    Excel.CloseExcel.CloseAndSave Instance: ExcelInstance
+ELSE
+    Excel.CloseExcel.CloseAndSaveAs Instance: ExcelInstance DocumentFormat: Excel.ExcelFormat.FromExtension DocumentPath: $'''C:\\Users\\petrrozkosny\\Desktop\\log.xlsx'''
+END
+**ENDREGION
+**REGION Prohlížeč
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''www.google.cz''' WindowState: WebAutomation.BrowserWindowState.Maximized ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 PiPUserDataFolderMode: WebAutomation.PiPUserDataFolderModeEnum.AutomaticProfile BrowserInstance=> Browser
+MouseAndKeyboard.SendKeys.FocusAndSendKeysByInstanceOrHandle WindowInstance: Browser TextToSend: $'''počasí brno{Return}''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
+WAIT 10
+WebAutomation.CloseWebBrowser BrowserInstance: Browser
+**ENDREGION
