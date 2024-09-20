@@ -1,0 +1,7 @@
+EVALUATE
+filter(
+ADDCOLUMNS(
+ALL(data[lokalita]),
+"suma srazek",
+CALCULATE(SUM(data[srazky])))
+,[suma srazek] > 17000)
