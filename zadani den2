@@ -1,0 +1,32 @@
+https://github.com/petrrozkosny/paut_zita
+
+
+student1@petrrozkosny.cz
+zita.2024
+
+Vytvořte tok "spocitej_soubory" se vstupní proměnnou cestaSlozky a výstupní
+proměnnou pocetSouboru.
+Tento tok získá soubory ve složce z proměnné cestaSlozky a následně je spočítá.
+
+
+Vytvořte tok "loguj_soubory"
+
+Zjistěte si aktuální datum a čas
+Zavolejte desktopový tok spocitej_soubory a výstup si uložte do proměnné
+pocetSouboruSlozka
+
+Přes krok "Když soubor existuje" zjistěte, jestli na Vaší ploše existuje soubor log.xlsx" Pokud ano, tak v dalším kroku otevřete tento Excel, jinak otevřete prázdný Excel.
+
+Do prvního volného řádku ve sloupci 1 zapište hodnotu proměnné s aktuálním
+datumem a časem, do druhého sloupce na stejném řádku zapište hodnotu proměnné
+pocetSouboruSlozka
+
+Zobrazte uživateli zprávu "Nalezeno {pocetSouboruSlozka}
+
+Excel zavřete a uložte (pokud jste otevírali nový Excel, tak jej uložte jako
+log.xlsx na Vaší plochu).
+
+
+Otevřete nový prohlížeč s výchozí stránkou www.google.cz
+Do vyhledávacího pole zadejte "počasí Brno" a vyhledejte výsledky pro daný dotaz.
+Počkejte 10 vteřin a poté prohlížeč zavřete.
